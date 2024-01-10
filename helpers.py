@@ -63,13 +63,55 @@ class Database:
 
         except Exception as e :
             raise EOFError(str(e))
-    
+    def update_field(self,kwargs):
+        if kwargs.get('table') == None:
+            raise Exception("Json data must have a table value key pair")
+        self.check_connection()
+        kwargs['user_id'] = self.get_pk_id(kwargs['user_id'])
+        if kwargs['table'] == 'user_data':
+            kwargs['id'] = kwargs['user_id']
+            del kwargs['user_id']
+        for key in kwargs:kwargs[key] = str(kwargs[key])
+        try:
+            """
+            Update the data into table using following command
+            """
+            command = f"""UPDATE {kwargs['table']} SET  """
+            print(command)
+            for key,value in kwargs.items():
+                if key in ['table', 'user_id', 'id']:
+                    continue
+                if key == 'email' and kwargs['table'] != 'user_data':
+                    continue
+                command = command + key + " = " + "'" + value + "'" + ' ,'
+            command = command.removesuffix(',')
+            if kwargs['table'] == 'user_data':
+                command += f"WHERE id = {kwargs['id']} ;"
+            else:
+                command += f"WHERE user_id = {kwargs['user_id']} ;"
+            self.__cursor.execute(command)
+            self.__conn.commit()     
+
+
+        except Exception as e :
+            raise EOFError(str(e))
+    def update_prophile_path(self,email,path):
+        self.check_connection()
+        id = self.get_pk_id(email=email)
+        command = f"""UPDATE user_data SET prophile = '{path}' WHERE id = {id} ;"""
+        self.__cursor.execute(command)
+        self.__conn.commit()
     def get_pk_id(self,email):
-        command = f"""SELECT user_id FROM user_data WHERE email='{email}'"""
+        command = f"""SELECT id FROM user_data WHERE email='{email}'"""
         self.__cursor.execute(command)
         fetched_rows = self.__cursor.fetchall()
         return fetched_rows[0][0]
-
+    def get_email_of_id(self,id):
+        id = str(id)
+        command = f"""SELECT email FROM user_data WHERE id='{id}';"""
+        self.__cursor.execute(command)
+        fetched_rows = self.__cursor.fetchall()
+        return fetched_rows[0][0]
     def authenticate(self,email,password):
         """
         Return true if the email and password is valid.
@@ -87,22 +129,30 @@ class Database:
         else:
             return False
         
-    def delete_user(self,email,database_password):
+    def delete_user(self,id,database_password):
         if database_password == self.__password:
-            command = """DELETE FROM user_data WHERE email='{email}';"""
+            id = str(id)
+            command = f"""DELETE FROM user_data WHERE id='{id}';"""
             # Executing the command in database
             self.__cursor.execute(command)
             self.__conn.commit()
-            print(self.__cursor.rowcount)
         else:
             raise Exception("Wrong Database Password ")
-
-    def get_all_user_data(self,email):
-        all_data = {
-            'email':email,
-        } 
+    def get_all_user_data(self,email=None,id=None):
+        if email:
+            all_data = {
+                'email':email,
+            } 
+            print(email)
+            all_data['id'] = self.get_pk_id(email=email)
+        if id :
+            all_data = {
+                'id' : str(id),
+            }
+            all_data['email'] = self.get_email_of_id(id=id)
         # user data
-        command = f"""SELECT user_id , firstname ,lastname ,prophile from user_data WHERE `email` = '{email}' ;"""
+        email = all_data['email']
+        command = f"""SELECT id , firstname ,lastname ,prophile from user_data WHERE `email` = '{email}' ;"""
         self.__cursor.execute(command)
         row = self.__cursor.fetchall()
         foreign_key = row[0][0]
@@ -161,7 +211,29 @@ class Database:
         all_data['description'] = row[0][1]
         all_data['technology_used'] = row[0][2]
         return all_data
+    def get_all_for_admin(self):
+        command = """
+        select 
+        user_data.id , prophile , firstname , 
+        lastname     , email    , user_addresses.state , 
+        user_skills.skill_name ,user_education.degree , 
+        user_projects.name , user_experience.position , 
+        user_certifications.name
+        
+        from user_data 
 
+        inner join user_addresses on user_data.id = user_addresses.user_id  
+        inner join user_skills on user_data.id = user_skills.user_id
+        inner join user_education on user_data.id = user_education.user_id
+        inner join user_projects on user_data.id = user_projects.user_id
+        inner join user_experience on user_data.id = user_experience.user_id
+        inner join user_certifications on user_data.id = user_certifications.user_id
+        
+        ;
+"""
+        self.__cursor.execute(command)
+        rows = self.__cursor.fetchall()
+        return rows
     def get_row(self,table_name:str,**kwargs)->list:
         self.check_connection()
         command = f"""SELECT * from {table_name} WHERE """
@@ -190,24 +262,9 @@ class Database:
 
 
 if __name__ == '__main__':
-    import random
     db = Database()
     db.connect()
-    print(db.get_all_user_data('unique@gmail.com'))
-    # db.insert_user_data(
-    #     firstname='amrit',
-    #     lastname='singh',
-    #     email=f'amrit{random.randint(1000,9999)}@gmail.com',
-    #     password='123'
-    #     )
-
-    #Exists
-    # print(db.authenticate(email='amrit8536@gamil.com',password='123'))
-
-    #not Exists
-    # print(db.authenticate(email='random@gami.com',password='random'))
-
-
-    # db.delete_user(email='live@gmail.com',database_password='admin1')
+    all_users = db.get_all_for_admin()
+    print(all_users)
 
 

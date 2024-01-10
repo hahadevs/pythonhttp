@@ -56,7 +56,6 @@ class RequestHandler(BaseHTTPRequestHandler):
 
     def _POST(method,*args,**kwargs):
         def main(self,*args,**kwargs):
-            print(self.path)
             if self.path.startswith('/api/'):
                 return method(self,*args,**kwargs)
             #do something
@@ -78,7 +77,6 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self.remove_session()
                 self.redirect('/')
             else:
-                print('rendering')
                 self.render('login.html')   
 
         elif self.path.endswith('signup') or self.path.endswith('signup/'):
@@ -95,6 +93,32 @@ class RequestHandler(BaseHTTPRequestHandler):
         
         elif self.path in ['/update','/update/'] :
             self.render('update.html')
+        elif self.path in ['/admin','/admin/'] :
+            with open('templates/adminpanel.html','r') as file:
+                adminpanel_html = file.read()
+            with open('templates/adminpanel_context_html.html','r') as file:
+                context_html = file.read() 
+            final_context_html = ""
+            for user_tuple in self.db.get_all_for_admin():
+                    print(user_tuple)
+                    user_html = context_html
+                    user_html = user_html.replace("""{{ id }}""",str(user_tuple[0]))
+                    user_html = user_html.replace("""{{ prophile }}""",str(user_tuple[1]))
+                    user_html = user_html.replace("""{{ firstname }}""",user_tuple[2])
+                    user_html = user_html.replace("""{{ lastname }}""",user_tuple[3])
+                    user_html = user_html.replace("""{{ email }}""",user_tuple[4])
+                    user_html = user_html.replace("""{{ state }}""",user_tuple[5])
+                    user_html = user_html.replace("""{{ skills }}""",user_tuple[6])
+                    user_html = user_html.replace("""{{ degree }}""",user_tuple[7])
+                    user_html = user_html.replace("""{{ project }}""",user_tuple[8])
+                    user_html = user_html.replace("""{{ position }}""",user_tuple[9])
+                    user_html = user_html.replace("""{{ certificate }}""",str(user_tuple[10]))
+                    final_context_html += user_html
+            adminpanel_html = adminpanel_html.replace("""{% fields %}""",final_context_html)
+            self.render_html(adminpanel_html)
+        elif self.path.startswith('/admin/update/'):
+            id = self.path.split("/")[3]
+            self.render('admin_update.html',context=self.db.get_all_user_data(id=str(id)))
         else:
             self.render_html('<html><body><h1>Please enter valid url</h1></body></html>')
 
@@ -208,11 +232,67 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.redirect('/login/')
             # self.render('signup.html')
         elif self.path.startswith('/api/update') or self.path.endswith('/api/update/'):
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
+            if self.is_session_authenticated():
+                user_email = self.is_session_authenticated()
+            else:self.send_response_only(400);return
+            ctype , pdict = cgi.parse_header(self.headers.get('content-type'))
+            if ctype == "multipart/form-data":
+                image_bytes = self.rfile.read(int(self.headers.get('Content-Length')))
+                image_path = "prophile-uploads/" + user_email
+                with open(image_path,'wb') as file:
+                    file.write(image_bytes)
+                self.db.update_prophile_path(user_email,image_path)
+                self.send_json_response({"updated":"successfully","status":"ok"})
+            elif ctype == "application/json":
+                updated_data = json.loads(self.rfile.read(int(self.headers.get('Content-Length'))).decode())
+                updated_data['user_id'] = user_email
+                try:
+                    self.db.update_field(updated_data)
+                    print(updated_data)
+                    self.send_json_response({"updated":"successfully","status":"ok"})
+                except Exception as e:
+                    self.send_json_response({"status":"notok","Error":e})
+            else:
+                self.send_response_only(400)
+                self.end_headers()
+    def do_DELETE(self):
+        if self.path in ['/api/delete','/api/delete/']:
+            json_data = self.rfile.read(int(self.headers.get('Content-Length'))).decode()
+            json_data = json.loads(json_data)
+            self.db.delete_user(json_data["id"],database_password="root")
+            self.send_json_response({"status":"ok"})
+        else:
+            self.send_response_only(400)
             self.end_headers()
-            self.wfile.write("{'response from api':'response is true'}".encode())
-
+    def do_UPDATE(self):
+        print(self.path)
+        if self.path.startswith("/api/admin/update"):pass
+        else: self.send_response_only(400);return 
+        ctype , pdict = cgi.parse_header(self.headers.get('content-type'))
+        if ctype == "multipart/form-data":
+            user_email = self.headers.get('email')
+            image_bytes = self.rfile.read(int(self.headers.get('Content-Length')))
+            image_path = "prophile-uploads/" + user_email
+            with open(image_path,'wb') as file:
+                file.write(image_bytes)
+            self.db.update_prophile_path(user_email,image_path)
+            self.send_json_response({"updated":"successfully","status":"ok"})
+        elif ctype == "application/json":
+            updated_data = json.loads(self.rfile.read(int(self.headers.get('Content-Length'))).decode())
+            try:
+                self.db.update_field(updated_data)
+                print(updated_data)
+                self.send_json_response({"updated":"successfully","status":"ok"})
+            except Exception as e:
+                self.send_json_response({"status":"notok","Error":e})
+        else:
+                self.send_response_only(400)
+                self.end_headers()
+    def send_json_response(self,response_dict:dict=None):
+        self.send_response(200)
+        self.send_header('Content-Type', 'application/json')
+        self.end_headers()
+        self.wfile.write(json.dumps(response_dict).encode())
     def render(self,template:str,alert:str=False,status:int=None,context:dict=None,cookies=None):
         with open(f'templates/{template}','r') as template:
             htmlresponse = template.read()

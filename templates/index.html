@@ -31,7 +31,7 @@
         <span class="text-sm text-slate-300">Hellow</span>
         <span class="text-xl text-slate-600">{% firstname %}</span>
     </span>
-    <a  href="/login/" class=""><Button type="button" class="bg-slate-500 px-4 cursor-pointer py-2 font-bold rounded text-white active:scale-90 hover:bg-slate-600 transition shadow-md hover:shadow-lg">Logout</Button></a>
+    <a onclick="logout();" class=""><Button type="button" class="bg-slate-500 px-4 cursor-pointer py-2 font-bold rounded text-white active:scale-90 hover:bg-slate-600 transition shadow-md hover:shadow-lg">Logout</Button></a>
 
 </nav>
 <div onclick="window.location.href='/update/';" class="fixed top-20 right-10 text-2xl text-slate-300 hover:text-slate-400 active:scale-90 transition cursor-pointer drop-shadow-sm">
@@ -187,7 +187,12 @@
         </div>
 
 </main>
-
+<script>
+    function logout(){
+        document.cookie = "sessionid=None; max-age=0";
+        window.location.href = "/";
+    };
+</script>
 
 </body>
 </html>
