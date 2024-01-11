@@ -70,24 +70,24 @@
         <div class="flex flex-row  gap-2">
           <div class="field">
             <label for="firstname" class="text-gray-700 text-sm font-bold ml-1 ">Firstname</label>
-            <input type="text" name="firstname" id="firstname"
+            <input required  type="text" name="firstname" id="firstname"
               class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
           </div>
           <div class="field">
             <label for="lastname" class="text-gray-700 text-sm font-bold ml-1 ">Lastname</label>
-            <input type="text" name="lastname" id="lastname"
+            <input required  type="text" name="lastname" id="lastname"
               class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
           </div>
 
         </div>
         <div class="field flex flex-col">
           <label for="email" class="text-gray-700 text-sm font-bold ml-1 ">Email</label>
-          <input type="email" name="email" id="email" placeholder="user@email.com"
+          <input required  type="email" name="email" id="email" placeholder="user@email.com"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[60%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
           <label for="password" class="text-gray-700 text-sm font-bold ml-1 ">Password</label>
-          <input type="password" name="password" id="password"
+          <input required  type="password" name="password" id="password"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
       </div>
@@ -114,7 +114,7 @@
         <div class="flex flex-row  gap-2">
           <div class="field">
             <label for="prophile" class="text-gray-700 text-sm font-bold ml-1 ">Choose File</label>
-            <input type="file" accept="image/*" name="prophile" id="prophile">
+            <input required  type="file" accept="image/*" name="prophile" id="prophile">
           </div>
         </div>
       </div>
@@ -139,27 +139,30 @@
 
         <div class="field flex flex-col">
           <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Street</label>
-          <input type="text" name="street" id="street" placeholder="132, My Street, Kingston"
+          <input required  type="text" name="street" id="street" placeholder="132, My Street, Kingston"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
           <label for="city" class="text-gray-700 text-sm font-bold ml-1 ">City</label>
-          <input type="text" name="city" id="city"
+          <input required  type="text" name="city" id="city"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
           <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">State</label>
           <select name="state" id=""
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition bg-white">
-            <option value="" selected="True" disabled="disabled">Select State</option>
-            <option value="andhra pradesh">Andhra Pradesh</option>
-            <option value="assam">Assam</option>
-            <option value="bihar">Bihar</option>
+            <option value="Andhra Pradesh">Andhra Pradesh</option>
+            <option value="Assam">Assam</option>
+            <option value="Bihar">Bihar</option>
+            <option value="Punjab">Punjab</option>
+            <option value="Delhi">Delhi</option>
+            <option value="Goa">Goa</option>
+            <option value="Jammu & Kashmir">Jammu & Kashmir</option>
           </select>
         </div>
         <div class="field">
           <label for="zipcode" class="text-gray-700 text-sm font-bold ml-1 ">Zipcode</label>
-          <input type="text" name="zipcode" id="zipcode"
+          <input required  type="text" name="zipcode" id="zipcode"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition ">
         </div>
       </div>
@@ -186,12 +189,12 @@
 
         <div class="field flex flex-col">
           <label for="skillname" class="text-gray-700 text-sm font-bold ml-1 ">Name</label>
-          <input type="text" name="skill-name" id="skillname" placeholder="Python, C++, Javascript ...."
+          <input required  type="text" name="skill-name" id="skillname" placeholder="Python, C++, Javascript ...."
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[60%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
           <label for="proficiency" class="text-gray-700 text-sm font-bold ml-1 ">Proficiency</label>
-          <input type="range" name="proficiency" id="proficiency"
+          <input required  type="range" name="proficiency" id="proficiency"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full  transition">
           <span class="w-full flex justify-center">
             <button type="button"><i class="fa fa-plus-circle"></i></button>
@@ -222,17 +225,17 @@
 
         <div class="field flex flex-col">
           <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Degree</label>
-          <input type="degree" name="degree" id="degree" placeholder="B.Tech, M.B.A ...."
+          <input required  type="degree" name="degree" id="degree" placeholder="B.Tech, M.B.A ...."
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
           <label for="city" class="text-gray-700 text-sm font-bold ml-1 ">Major</label>
-          <input type="major" name="major" id="major"
+          <input required  type="major" name="major" id="major"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
           <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">University</label>
-          <input type="university" name="university" id="university"
+          <input required  type="university" name="university" id="university"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
@@ -273,19 +276,18 @@
 
         <div class="field flex flex-col">
           <label for="projectname" class="text-gray-700 text-sm font-bold ml-1  ">Project Name</label>
-          <input type="text" name="project-name" id="projectname" placeholder=""
+          <input required  type="text" name="project-name" id="projectname" placeholder=""
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
           <label for="city" class="text-gray-700 text-sm font-bold ml-1 ">Description</label>
           <textarea name="project-description" id="projectdescription"
-            class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition"></textarea>
+            class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">Your description here..</textarea>
         </div>
         <div class="field">
           <label for="technology-used" class="text-gray-700 text-sm font-bold ml-1 ">Technology Used</label>
           <select name="technology-used" id="technology-used"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition bg-white">
-            <option value="" selected="True" disabled="disabled">Technology Used</option>
             <option value="python">Python</option>
             <option value="javascript">Javascript</option>
             <option value="html">html</option>
@@ -312,14 +314,13 @@
       <div class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
         <div class="field flex flex-col">
           <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Company Name</label>
-          <input type="text" name="experience-name" id="companyname"
+          <input required  type="text" name="experience-name" id="companyname"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field">
           <label for="city" class="text-gray-700 text-sm font-bold ml-1 ">Position</label>
           <select name="position" id=""
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition bg-white">
-            <option value="" selected="False"></option>
             <option value="HR">HR</option>
             <option value="Python Developer">Python Developer</option>
             <option value="node js developer">Node js Developer</option>
@@ -329,16 +330,16 @@
         <div class="field">
           <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">Responsibilities</label>
           <textarea name="responsibilities" id="university"
-            class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition"></textarea>
+            class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">Your Responsibilities here...</textarea>
         </div>
         <div class="field  flex flex-col">
           <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">Start Date</label>
-          <input type="date" name="start-date" id="startdate"
+          <input required  type="date" name="start-date" id="startdate"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field flex flex-col">
           <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">End Date</label>
-          <input type="date" name="end-date" id="enddate"
+          <input required  type="date" name="end-date" id="enddate"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
       </div>
@@ -361,17 +362,17 @@
       <div class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
         <div class="field flex flex-col">
           <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Certificate Name</label>
-          <input type="text" name="certificate-name" id="certificatename"
+          <input required  type="text" name="certificate-name" id="certificatename"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field flex flex-col">
           <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Organization Name</label>
-          <input type="text" name="organization-name" id="organizationame"
+          <input required  type="text" name="organization-name" id="organizationame"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
         <div class="field  flex flex-col">
           <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">Issue Date</label>
-          <input type="date" name="issuing-date" id="issuedate"
+          <input required  type="date" name="issuing-date" id="issuedate"
             class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
         </div>
       </div>

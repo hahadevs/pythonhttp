@@ -443,6 +443,14 @@
     async function updateProphileImage(){
         updating_div.classList.add("translate-y-[20%]");
         const image = document.getElementById("prophile").files[0];
+        if (document.getElementById("prophile").value == ""){
+            updating_div.classList.remove("translate-y-[20%]");
+            error_div.innerHTML = "Please Select and image !";
+            error_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 3000));
+            error_div.classList.remove("translate-y-[20%]");
+            return;
+        };
         updated_json = {
             "table":"user_data",
             "prophile":image

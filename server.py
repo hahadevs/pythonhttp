@@ -2,7 +2,7 @@ from http.server import HTTPServer
 from http.server import BaseHTTPRequestHandler
 import cgi
 from http.cookies import SimpleCookie
-from helpers import Database
+from postgres import Database
 import json
 import os
 import uuid
@@ -91,9 +91,9 @@ class RequestHandler(BaseHTTPRequestHandler):
         elif self.path.startswith('/prophile-uploads/') or self.path.startswith('/login/prophile-uploads/'):
             self.render_image(self.path)
         
-        elif self.path in ['/update','/update/'] :
+        elif self.path in ['/update','/update/'] and self.is_session_authenticated():
             self.render('update.html')
-        elif self.path in ['/admin','/admin/'] :
+        elif self.path in ['/admin','/admin/'] and self.is_session_authenticated():
             with open('templates/adminpanel.html','r') as file:
                 adminpanel_html = file.read()
             with open('templates/adminpanel_context_html.html','r') as file:
@@ -141,7 +141,6 @@ class RequestHandler(BaseHTTPRequestHandler):
         
         elif self.path.endswith('signup') or self.path.endswith('signup/'):
             email = self.POST.get('email')[0]
-
             #  table = user_data
             firstname = self.POST.get('firstname')[0]
             lastname = self.POST.get('lastname')[0]
@@ -223,6 +222,7 @@ class RequestHandler(BaseHTTPRequestHandler):
             date = self.POST.get('issuing-date')[0]
             self.db.insert_into(
                 table = 'user_certifications',
+                name = name,
                 issuing_organization = issuing_organization,
                 date = date,
                 user_id = email
@@ -248,7 +248,6 @@ class RequestHandler(BaseHTTPRequestHandler):
                 updated_data['user_id'] = user_email
                 try:
                     self.db.update_field(updated_data)
-                    print(updated_data)
                     self.send_json_response({"updated":"successfully","status":"ok"})
                 except Exception as e:
                     self.send_json_response({"status":"notok","Error":e})
@@ -256,17 +255,16 @@ class RequestHandler(BaseHTTPRequestHandler):
                 self.send_response_only(400)
                 self.end_headers()
     def do_DELETE(self):
-        if self.path in ['/api/delete','/api/delete/']:
+        if self.path in ['/api/delete','/api/delete/'] and self.is_session_authenticated():
             json_data = self.rfile.read(int(self.headers.get('Content-Length'))).decode()
             json_data = json.loads(json_data)
-            self.db.delete_user(json_data["id"],database_password="root")
+            self.db.delete_user(json_data["id"],database_password="postgres")
             self.send_json_response({"status":"ok"})
         else:
             self.send_response_only(400)
             self.end_headers()
     def do_UPDATE(self):
-        print(self.path)
-        if self.path.startswith("/api/admin/update"):pass
+        if self.path.startswith("/api/admin/update") and self.is_session_authenticated():pass
         else: self.send_response_only(400);return 
         ctype , pdict = cgi.parse_header(self.headers.get('content-type'))
         if ctype == "multipart/form-data":
@@ -281,7 +279,6 @@ class RequestHandler(BaseHTTPRequestHandler):
             updated_data = json.loads(self.rfile.read(int(self.headers.get('Content-Length'))).decode())
             try:
                 self.db.update_field(updated_data)
-                print(updated_data)
                 self.send_json_response({"updated":"successfully","status":"ok"})
             except Exception as e:
                 self.send_json_response({"status":"notok","Error":e})

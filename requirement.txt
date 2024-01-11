@@ -8,6 +8,7 @@ mysql-connector-python==8.2.0
 numpy==1.26.3
 opencv-python==4.9.0.80
 protobuf==4.21.12
+psycopg2==2.9.9
 requests==2.31.0
 requests-toolbelt==1.0.0
 urllib3==2.1.0
