@@ -1,0 +1,25 @@
+<tr id="{{ id }}">
+    <td>{{ id }}</td>
+    <td><img src="{{ prophile }}" alt="" width="40"></td>
+    <td>{{ firstname }}</td>
+    <td>{{ lastname }}</td>
+    <td>{{ email }}</td>
+    <td>{{ state }}</td>
+    <td>{{ skills }}</td>
+    <td>{{ degree }}</td>
+    <td>{{ project }}</td>
+    <td>{{ position }}</td>
+    <td>{{ certificate }}</td>
+    <td>
+      <button type="button" onclick="editUser({{ id }});" class=" bg-blue-500 rounded-md  shadow-md transition active:scale-90 hover:bg-blue-600 py-1 px-2 mt-3 ml-4">
+      <i class="fa fa-edit mr-2">
+      </i>
+      Edit
+    </button>
+      <button type="button" onclick="deleteUser({{ id }});" class=" bg-red-500 rounded-md  shadow-md transition active:scale-90 hover:bg-red-600 py-1 px-2 mt-3 ml-4">
+        <i class="fa fa-trash mr-2">
+        </i>
+      </button>
+    </td>
+
+  </tr>

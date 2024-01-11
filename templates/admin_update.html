@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UpDate</title>
+    <!-- google font roboto  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <!-- google font kanit  -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Roboto:wght@900&display=swap"
+        rel="stylesheet">
+    <!-- google font prompt  -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Prompt:wght@200&family=Roboto:wght@700&display=swap"
+        rel="stylesheet">
+    <!-- font awesome cdn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    * {
+        margin: 0;
+        box-sizing: border-box;
+        padding: 0;
+    }
+
+    input {
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: 100;
+    }
+
+    .roboto {
+        font-family: Roboto;
+    }
+
+    .kanit {
+        font-family: Kanit;
+    }
+
+    .prompt {
+        font-family: Prompt;
+    }
+
+</style>
+<div id="success-div" class="fixed top-4 bg-green-200 text-slate-800 kanit py-2 px-4 rounded-md shadow-lg transition delay-500 border-2 border-green-300 -translate-y-[150%]"><i class="fa fa-check mr-3"></i>Data Successfully Updated</div>
+<div id="updating-div" class="fixed top-4 bg-yellow-100 text-slate-800 kanit py-2 px-4 rounded-md shadow-lg transition delay-500 border-2 border-yellow-200 -translate-y-[150%]"><i class="fa fa-spinner mr-3 animate-spin"></i>Processing</div>
+<div id="error-div" class="fixed top-4 bg-red-100 text-red-800 kanit py-2 px-4 rounded-md shadow-lg transition delay-500 border-2 border-red-200 -translate-y-[150%]"><i class="fa fa-exclamation-triangle mr-3 "></i>Something Went Wrong !</div>
+<body class="bg-white min-w-screen min-h-screen flex flex-col items-center justify-center">
+    <h1 class="roboto text-5xl w-full text-center text-slate-500 mt-10 "><span
+            class="text-sm h-full text-slate-300 text-top mr-3">Keep Your Prophile </span>Up To Date</h1>
+    <div
+        class="bg-blue-100 shadow-inner border border-gray-200 w-[80%] mt-10 h-full p-10 [&>div]:mb-10 [&>div>form]:shadow-inner [&>div>form]:shadow-slate-400  rounded-md [&>div]:justify-center">
+        <!-- 
+      
+      
+      first part 
+    
+    
+    -->
+        <div class="card flex ">
+            <!-- <div class="left-div flex-grow-1 bg-blue-50 w-[30%]">
+        <span class="kanit text-lg text-gray-600">1. Prophile</span>
+        <hr>
+        <span class="text-sm text-gray-500 prompt">This information will be displayed publicly so be careful what you
+          share.</span>
+      </div> -->
+            <form method="post" enctype="multipart/form-data"
+                class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
+                <div class="flex flex-row  gap-2">
+                    <div class="field">
+                        <label for="firstname" class="text-gray-700 text-sm font-bold ml-1 ">Firstname</label>
+                        <input type="text" name="firstname" id="firstname" value="{% firstname %}"
+                            class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                    </div>
+                    <div class="field">
+                        <label for="lastname" class="text-gray-700 text-sm font-bold ml-1 ">Lastname</label>
+                        <input type="text" name="lastname" id="lastname" value="{% lastname %}"
+                            class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                    </div>
+
+                </div>
+                <!-- <div class="field flex flex-col">
+                    <label for="email" class="text-gray-700 text-sm font-bold ml-1 ">Email</label>
+                    <input type="email" name="email" id="email" placeholder="user@email.com"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[60%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div> -->
+                <!-- <div class="field">
+                    <label for="password" class="text-gray-700 text-sm font-bold ml-1 ">Password</label>
+                    <input type="password" name="password" id="password"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div> -->
+                <span class="w-full flex justify-center">
+                    <button type="button" onclick="updateProphile()"
+                        class="kanit text-2xl bg-slate-600 px-3 py-2 text-white rounded-md shadow-md shadow-slate-600 active:scale-90 transition hover:shadow-lg hover:shadow-slate-600 mt-5 mb-3">Update</button>
+                </span>
+            </form>
+        </div>
+
+        <div class="bg-gray-200 w-full h-[2px] self-center"></div>
+        <!-- 
+      
+      
+      second part 
+    
+    
+    -->
+
+
+        <div class="card flex ">
+            <!-- <div class="left-div flex-grow-1 bg-blue-50 w-[30%]">
+        <span class="kanit text-lg text-gray-600">2. Prophile Uplaod</span>
+        <hr>
+        <span class="text-sm text-gray-500 prompt">Be yourself; everyone else is taken.
+        </span>
+      </div> -->
+            <form enctype="multipart/form-data" method="post"
+                class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4 ">
+                <div class="flex flex-row  gap-2">
+                    <div class="field">
+                        <label for="prophile" class="text-gray-700 text-sm font-bold ml-1 ">Choose File</label>
+                        <input type="file" accept="image/*" name="prophile" id="prophile">
+                    </div>
+                </div>
+                <span class="w-full flex justify-center">
+                    <button type="button" onclick="updateProphileImage();" id="prohile"
+                        class="kanit text-2xl bg-slate-600 px-3 py-2 text-white rounded-md shadow-md shadow-slate-600 active:scale-90 transition hover:shadow-lg hover:shadow-slate-600 mt-5 mb-3">Update</button>
+                </span>
+            </form>
+        </div>
+
+
+        <div class="bg-gray-200 w-full h-[2px] self-center"></div>
+        <!-- 
+      
+      
+      third part 
+    
+    
+    -->
+        <div class="card flex ">
+            <!-- <div class="left-div flex-grow-1 bg-blue-50 w-[30%]">
+        <span class="kanit text-lg text-gray-600">3. Address</span>
+        <hr>
+        <span class="text-sm text-gray-500 prompt">Nothing succeeds like an address</span>
+      </div> -->
+            <form enctype="multipart/form-data" method="post"
+                class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
+
+                <div class="field flex flex-col">
+                    <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Street</label>
+                    <input type="text" name="street" id="street" value="{% street %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field">
+                    <label for="city" class="text-gray-700 text-sm font-bold ml-1 ">City</label>
+                    <input type="text" name="city" id="city" value="{% street %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field">
+                    <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">State</label>
+                    <select name="state" id="state" value="{% state %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition bg-white">
+                        <option value="" selected="True" disabled="disabled">Select State</option>
+                        <option value="andhra pradesh">Andhra Pradesh</option>
+                        <option value="assam">Assam</option>
+                        <option value="bihar">Bihar</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="zipcode" class="text-gray-700 text-sm font-bold ml-1 ">Zipcode</label>
+                    <input type="text" name="zipcode" id="zipcode" value="{% zipcode %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition ">
+                </div>
+                <span class="w-full flex justify-center">
+                    <button type="button" onclick="updateAddress();"
+                        class="kanit text-2xl bg-slate-600 px-3 py-2 text-white rounded-md shadow-md shadow-slate-600 active:scale-90 transition hover:shadow-lg hover:shadow-slate-600 mt-5 mb-3">Update</button>
+                </span>
+            </form>
+        </div>
+
+
+
+        <div class="bg-gray-200 w-full h-[2px] self-center"></div>
+        <!-- 
+      
+      
+      fourth part  
+    
+    
+    -->
+        <div class="card flex ">
+            <!-- <div class="left-div flex-grow-1 bg-blue-50 w-[30%]">
+        <span class="kanit text-lg text-gray-600">4. Skills</span>
+        <hr>
+        <span class="text-sm text-gray-500 prompt">Excellence is not a skill, it's an attitude</span>
+      </div> -->
+            <form enctype="multipart/form-data" method="post"
+                class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
+                <div class="field flex flex-col">
+                    <label for="skillname" class="text-gray-700 text-sm font-bold ml-1 ">Name</label>
+                    <input type="text" name="skill-name" id="skill-name" value="{% skill_name %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[60%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field">
+                    <label for="proficiency" class="text-gray-700 text-sm font-bold ml-1 ">Proficiency</label>
+                    <input type="range" name="proficiency" id="proficiency" value="{% proficiency %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full  transition">
+                    <span class="w-full flex justify-center">
+                        <button type="button"><i class="fa fa-plus-circle"></i></button>
+                    </span>
+                </div>
+                <span class="w-full flex justify-center">
+                    <button type="button" onclick="updateSkills();"
+                        class="kanit text-2xl bg-slate-600 px-3 py-2 text-white rounded-md shadow-md shadow-slate-600 active:scale-90 transition hover:shadow-lg hover:shadow-slate-600 mt-5 mb-3">Update</button>
+                </span>
+            </form>
+        </div>
+
+
+
+        <div class="bg-gray-200 w-full h-[2px] self-center"></div>
+        <!-- 
+      
+      
+      fifth part 
+    
+    
+    -->
+        <div class="card flex ">
+            <!-- <div class="left-div flex-grow-1 bg-blue-50 w-[30%]">
+        <span class="kanit text-lg text-gray-600">5. Education</span>
+        <hr>
+        <span class="text-sm text-gray-500 prompt">Education is not preparation for life; education is life
+          itself.</span>
+      </div> -->
+            <form enctype="multipart/form-data" method="post"
+                class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
+
+                <div class="field flex flex-col">
+                    <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Degree</label>
+                    <input type="degree" name="degree" id="degree" value="{% degree %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field">
+                    <label for="city" class="text-gray-700 text-sm font-bold ml-1 ">Major</label>
+                    <input type="major" name="major" id="major" value="{% major %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field">
+                    <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">University</label>
+                    <input type="university" name="university" id="university" value="{% university %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field">
+                    <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">Graduation Year</label>
+                    <select name="graduation-year" id="graduation-year" value="{% graduation_year %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition bg-white">
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                    </select>
+                </div>
+                <span class="w-full flex justify-center">
+                    <button type="button" onclick="updateEducation();"
+                        class="kanit text-2xl bg-slate-600 px-3 py-2 text-white rounded-md shadow-md shadow-slate-600 active:scale-90 transition hover:shadow-lg hover:shadow-slate-600 mt-5 mb-3">Update</button>
+                </span>
+            </form>
+        </div>
+
+
+        <div class="bg-gray-200 w-full h-[2px] self-center"></div>
+        <!-- 
+      
+      
+      sixth part 
+    
+    
+    -->
+        <div class="card flex ">
+            <!-- <div class="left-div flex-grow-1 bg-blue-50 w-[30%]">
+        <span class="kanit text-lg text-gray-600">6. Projects</span>
+        <hr>
+        <span class="text-sm text-gray-500 prompt">Every project is an opportunity to learn, to figure out problems and
+          challenges, to invent and reinvent..</span>
+      </div> -->
+            <form enctype="multipart/form-data" method="post"
+                class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
+
+                <div class="field flex flex-col">
+                    <label for="projectname" class="text-gray-700 text-sm font-bold ml-1  ">Project Name</label>
+                    <input type="text" name="project-name" id="project-name" value="{% project_name %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field">
+                    <label for="city" class="text-gray-700 text-sm font-bold ml-1 ">Description</label>
+                    <textarea name="project-description" id="description" 
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">{% description %}</textarea>
+                </div>
+                <div class="field">
+                    <label for="technology-used" class="text-gray-700 text-sm font-bold ml-1 ">Technology Used</label>
+                    <select name="technology-used" id="technology-used" value="{% technology_used %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition bg-white">
+                        <option value="" selected="True" disabled="disabled">Technology Used</option>
+                        <option value="python">Python</option>
+                        <option value="javascript">Javascript</option>
+                        <option value="html">html</option>
+                    </select>
+                </div>
+                <span class="w-full flex justify-center">
+                    <button type="button" onclick="updateProjects();"
+                        class="kanit text-2xl bg-slate-600 px-3 py-2 text-white rounded-md shadow-md shadow-slate-600 active:scale-90 transition hover:shadow-lg hover:shadow-slate-600  mt-5 mb-3">Update</button>
+                </span>
+            </form>
+        </div>
+
+        <div class="bg-gray-200 w-full h-[2px] self-center"></div>
+        <!-- 
+      
+      
+      seventh part 
+    
+    
+    -->
+        <div class="card flex ">
+            <!-- <div class="left-div flex-grow-1 bg-blue-50 w-[30%]">
+        <span class="kanit text-lg text-gray-600">7. Work Experience</span>
+        <hr>
+        <span class="text-sm text-gray-500 prompt">Experience is the child of thought, and thought is the child of
+          action</span>
+      </div> -->
+            <form enctype="multipart/form-data" method="post"
+                class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
+                <div class="field flex flex-col">
+                    <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Company Name</label>
+                    <input type="text" name="experience-name" id="experience-name" value="{% exp_name %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field">
+                    <label for="city" class="text-gray-700 text-sm font-bold ml-1 ">Position</label>
+                    <select name="position" id="position" value="{% position %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition bg-white">
+                        <option value="" selected="False"></option>
+                        <option value="HR">HR</option>
+                        <option value="Python Developer">Python Developer</option>
+                        <option value="node js developer">Node js Developer</option>
+                        <option value="recruiter">Recruiter</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">Responsibilities</label>
+                    <textarea name="responsibilities" id="responsibilities" 
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-full focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">{% responsibilities %}</textarea>
+                </div>
+                <div class="field  flex flex-col">
+                    <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">Start Date</label>
+                    <input type="date" name="start-date" id="start-date" value="{% start_date %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field flex flex-col">
+                    <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">End Date</label>
+                    <input type="date" name="end-date" id="end-date" value="{% end_date %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <span class="w-full flex justify-center">
+                    <button type="button" onclick="updateExperience();"
+                        class="kanit text-2xl bg-slate-600 px-3 py-2 text-white rounded-md shadow-md shadow-slate-600 active:scale-90 transition hover:shadow-lg hover:shadow-slate-600  mt-5 mb-3">Update</button>
+                </span>
+            </form>
+        </div>
+        <div class="bg-gray-200 w-full h-[2px] self-center"></div>
+        <!-- 
+      
+      
+      eighth part 
+    
+    
+    -->
+        <div class="card flex ">
+            <!-- <div class="left-div flex-grow-1 bg-blue-50 w-[30%]">
+        <span class="kanit text-lg text-gray-600">8. Certification</span>
+        <hr>
+        <span class="text-sm text-gray-500 prompt">A certificate without knowledge is a gun without bullets in your hand</span>
+      </div> -->
+            <form enctype="multipart/form-data" method="post"
+                class="right-div flex-grow-1 w-[70%] rounded-lg bg-white border p-4">
+                <div class="field flex flex-col">
+                    <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Certificate Name</label>
+                    <input type="text" name="certificate-name" id="certificate-name" value="{% certificate_name %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field flex flex-col">
+                    <label for="street" class="text-gray-700 text-sm font-bold ml-1  ">Organization Name</label>
+                    <input type="text" name="organization-name" id="issuing-organization" value="{% issuing_organization %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <div class="field  flex flex-col">
+                    <label for="state" class="text-gray-700 text-sm font-bold ml-1 ">Issue Date</label>
+                    <input type="date" name="issuing-date" id="date" value="{% date %}"
+                        class="text-gray-500  border-2 text-md  rounded-md p-2 mb-4 mt-1 w-[70%] focus:outline-none  hover:shadow-md focus:translate-x-1 focus:-translate-y-1 transition">
+                </div>
+                <span class="w-full flex justify-center">
+                    <button type="button" onclick="updateCertificate();"
+                        class="kanit text-2xl bg-slate-600 px-3 py-2 text-white rounded-md shadow-md shadow-slate-600 active:scale-90 transition hover:shadow-lg hover:shadow-slate-600  mt-5 mb-3">Update</button>
+                </span>
+            </form>
+        </div>
+    </div>
+    </div>
+
+
+</body>
+
+
+<script>
+    var success_div = document.getElementById('success-div');
+    var updating_div = document.getElementById('updating-div');
+    var error_div = document.getElementById('error-div');
+    async function updateProphile(){
+        updating_div.classList.add("translate-y-[20%]");
+        const firstname = document.getElementById('firstname').value;
+        const lastname = document.getElementById('lastname').value;
+        updated_json = {"table":"user_data","firstname":firstname,"lastname":lastname};
+        response = await update_Api(updated_json);
+        console.log(response)
+        updating_div.classList.remove("translate-y-[20%]");
+        if (response["status"] == "ok"){
+            success_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 3000));
+            success_div.classList.remove("translate-y-[20%]");
+        }
+
+    };
+    async function updateProphileImage(){
+        updating_div.classList.add("translate-y-[20%]");
+        const image = document.getElementById("prophile").files[0];
+        updated_json = {
+            "table":"user_data",
+            "prophile":image
+        };
+        response = await fetch(
+            '/api/admin/update',
+            {
+                method:"UPDATE",
+                credentials:"same-origin",
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'multipart/form-data',
+                    'email':'{% email %}'
+                },
+                body:image
+            }
+        );
+        response = await response.json()
+        console.log(response)
+        updating_div.classList.remove("translate-y-[20%]");
+        success_div.classList.add("translate-y-[20%]");
+        await new Promise(r => setTimeout(r, 3000));
+        success_div.classList.remove("translate-y-[20%]");
+    };
+    async function updateAddress(){
+        updating_div.classList.add("translate-y-[20%]");
+        const street = document.getElementById('street').value;
+        const city = document.getElementById('city').value;
+        const state = document.getElementById('state').value;
+        const zipcode = document.getElementById('zipcode').value;
+        updated_json = {
+            "table":"user_addresses",
+            "street" : street,
+            "city" : city,
+            "state" : state,
+            "zipcode" : zipcode
+        };
+        response = await update_Api(updated_json);
+        console.log(response);
+        updating_div.classList.remove("translate-y-[20%]");
+        if (response["status"] == "ok"){
+            success_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 3000));
+            success_div.classList.remove("translate-y-[20%]");
+        }
+    };
+    async function updateSkills(){
+        updating_div.classList.add("translate-y-[20%]");
+        const skill_name = document.getElementById('skill-name').value;
+        const proficiency = document.getElementById('proficiency').value;
+        updated_json = {
+            "table" : "user_skills",
+            "skill_name" : skill_name,
+            "proficiency" : proficiency
+        }
+        response = await update_Api(updated_json);
+        console.log(response);
+        updating_div.classList.remove("translate-y-[20%]");
+        if (response["status"] == "ok"){
+            success_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 3000));
+            success_div.classList.remove("translate-y-[20%]");
+        }
+    };
+    async function updateEducation(){
+        updating_div.classList.add("translate-y-[20%]");
+        const degree = document.getElementById('degree').value;
+        const major = document.getElementById('major').value;
+        const university = document.getElementById('university').value;
+        const graduation_year = document.getElementById('graduation-year').value;
+        updated_json = {
+            "table" : "user_education",
+            "degree" : degree,
+            "major" : major,
+            "university" : university,
+            "graduation_year" : graduation_year
+        };
+        response = await update_Api(updated_json);
+        console.log(response);
+        updating_div.classList.remove("translate-y-[20%]");
+        if (response["status"] == "ok"){
+            success_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 3000));
+            success_div.classList.remove("translate-y-[20%]");
+        }
+    }
+    async function updateProjects(){
+        updating_div.classList.add("translate-y-[20%]");
+        const name = document.getElementById("project-name").value;
+        const technology_used = document.getElementById('technology-used').value;
+        const description = document.getElementById("description").value;
+        updated_json = {
+            "table" : "user_projects",
+            "name" : name,
+            "technology_used" : technology_used,
+            "description" : description
+        }
+        response = await update_Api(updated_json);
+        console.log(response);
+        updating_div.classList.remove("translate-y-[20%]");
+        if (response["status"] == "ok"){
+            success_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 3000));
+            success_div.classList.remove("translate-y-[20%]");
+        }
+    };
+    async function updateExperience(){
+        updating_div.classList.add("translate-y-[20%]");
+        const name = document.getElementById("experience-name").value;
+        const position = document.getElementById("position").value;
+        const responsibilities = document.getElementById("responsibilities").value;
+        const start_date = document.getElementById("start-date").value;
+        const end_date = document.getElementById("end-date").value;
+        updated_json = {
+            "table" : "user_experience",
+            "name" : name,
+            "position" : position,
+            "responsibilities" : responsibilities,
+            "start_date" : start_date,
+            "end_date" : end_date
+        }
+        response = await update_Api(updated_json);
+        console.log(response);
+        updating_div.classList.remove("translate-y-[20%]");
+        if (response["status"] == "ok"){
+            success_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 3000));
+            success_div.classList.remove("translate-y-[20%]");
+        };
+    };
+    async function updateCertificate(){
+        updating_div.classList.add("translate-y-[20%]");
+        const name = document.getElementById("certificate-name").value;
+        const org = document.getElementById("issuing-organization").value;
+        const date = document.getElementById("date").value;
+        updated_json = {
+            "table" : "user_certifications",
+            "name" : name,
+            "issuing_organization" : org,
+            "date" : date
+        }
+        response = await update_Api(updated_json);
+        console.log(response);
+        updating_div.classList.remove("translate-y-[20%]");
+        if (response["status"] == "ok"){
+            success_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 3000));
+            success_div.classList.remove("translate-y-[20%]");
+        }
+    }
+    async function update_Api(data){
+        url = "/api/admin/update/";
+        data["user_id"] = "{% email %}";
+        response = await fetch(
+                url,
+            {
+                method:"UPDATE",
+                credentials:"same-origin",
+                headers:{
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(data)
+            }
+        );
+        return await response.json();
+    }
+</script>
+</html>

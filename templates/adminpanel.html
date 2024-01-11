@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminpanel</title>
+    <!-- google font roboto  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <!-- google font kanit  -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Roboto:wght@900&display=swap"
+        rel="stylesheet">
+    <!-- google font prompt  -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@500&family=Prompt:wght@200&family=Roboto:wght@700&display=swap"
+        rel="stylesheet">
+    <!-- font awesome cdn  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- tailwind css cdn  -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<style>
+    .roboto {
+        font-family: Roboto;
+    }
+
+    .kanit {
+        font-family: Kanit;
+    }
+
+    .prompt {
+        font-family: Prompt;
+    }
+    body{
+        background-image: url(https://webenezer.com.br/wp-content/uploads/2017/09/web-designer-pune-background-white-webenezer.jpg);background-size: cover;
+
+    }
+    main{
+        z-index: 2;
+    }
+
+</style>
+<div id="success-div" class="fixed top-4 bg-green-200 text-slate-800 kanit py-2 px-4 rounded-md shadow-lg transition delay-500 border-2 border-green-300 -translate-y-[150%]"><i class="fa fa-check mr-3"></i>User Removed Successfully.</div>
+<div id="updating-div" class="fixed top-4 bg-yellow-100 text-slate-800 kanit py-2 px-4 rounded-md shadow-lg transition delay-500 border-2 border-yellow-200 -translate-y-[150%]"><i class="fa fa-spinner mr-3 animate-spin"></i>Processing</div>
+<div id="error-div" class="fixed top-4 bg-red-100 text-red-800 kanit py-2 px-4 rounded-md shadow-lg transition delay-500 border-2 border-red-200 -translate-y-[150%]"><i class="fa fa-exclamation-triangle mr-3 "></i>Something Went Wrong !</div>
+<body class="flex flex-col justify-center items-center min-w-screen min-h-screen ">
+    
+    <div class="roboto text-5xl text-slate-50 shadow-md  py-4 px-8 rounded-lg bg-slate-600">
+        AdminPanel
+    </div>
+    <main class="flex justify-center items-center mt-10 text-slate-200 p-5 bg-slate-600 rounded-lg shadow-md shadow-gray-700 m-10">
+        <table class="table-auto" >
+            <thead class="roboto text-xl">
+              <tr class="border-b border-slate-400 text-left">
+                <th class="min-w-[100px]">User_id</th>
+                <th class="min-w-[100px]">Prophile</th>
+                <th class="min-w-[100px]">Firstname</th>
+                <th class="min-w-[100px]">Lastname</th>
+                <th class="min-w-[100px]">Email</th>
+                <th class="min-w-[100px]">State</th>
+                <th class="min-w-[100px]">Skills</th>
+                <th class="min-w-[100px]">Degree</th>
+                <th class="min-w-[100px]">Project</th>
+                <th class="min-w-[100px]">Position(Exp.)</th>
+                <th class="min-w-[100px]">Certificate Name</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="kanit text-lg m-2 text-white [&>tr>td]:py-1 [&>tr>td]:px-2 [&>tr>td]:border-r-2 [&>tr>td]:border-slate-400">
+                {% fields %}
+                
+            </tbody>
+          </table>
+    </main>
+</body>
+<script>
+    var success_div = document.getElementById('success-div');
+    var updating_div = document.getElementById('updating-div');
+    var error_div = document.getElementById('error-div');
+    async function editUser(id){
+        window.location.href = `/admin/update/${id}/`;
+    };
+    async function deleteUser(id){
+        updating_div.classList.add("translate-y-[20%]");
+        url = '/api/delete/'
+        try{
+            response = await fetch(
+                url = url ,
+                {
+                    method:"DELETE",
+                    credentials:"same-origin",
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body:JSON.stringify({"id":id})
+                }
+            );
+            response = await response.json();
+            updating_div.classList.remove("translate-y-[20%]");
+            console.log(response);
+            success_div.classList.add("translate-y-[20%]");
+            document.getElementById(`${id}`).remove();
+            await new Promise(r => setTimeout(r, 3000));
+            success_div.classList.remove("translate-y-[20%]");
+        }
+        catch(e){
+            updating_div.classList.remove("translate-y-[20%]");
+            error_div.classList.add("translate-y-[20%]");
+            await new Promise(r => setTimeout(r, 5000));
+            error_div.classList.remove("translate-y-[20%]");
+            console.log(e)
+        }
+
+    };
+</script>
+</html>
